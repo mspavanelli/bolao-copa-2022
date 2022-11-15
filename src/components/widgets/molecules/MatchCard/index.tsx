@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-
-import { countries } from "@/data/countries";
-import { getName } from "country-list";
-import { X } from "phosphor-react";
+import { useState } from "react";
 import dayJS from "dayjs";
 import ptBR from "dayjs/locale/pt-br";
-import { useEffect, useState } from "react";
+import { X } from "phosphor-react";
+import { getName } from "country-list";
 
 export enum MatchStatus {
   CLOSED,
