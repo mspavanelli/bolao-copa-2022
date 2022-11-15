@@ -1,0 +1,38 @@
+type Country = {
+  code: string;
+};
+
+export const countries: string[] = [
+  "QA",
+  "EC",
+  "SN",
+  "NL",
+  "GB-ENG",
+  "IR",
+  "US",
+  "GB-WLS",
+  "AR",
+  "SA",
+  "MX",
+  "PL",
+  "FR",
+  "AU",
+  "DK",
+  "TN",
+  "ES",
+  "CR",
+  "DE",
+  "JP",
+  "BE",
+  "CA",
+  "MA",
+  "HR",
+  "BR",
+  "RS",
+  "CH",
+  "CM",
+  "PT",
+  "GH",
+  "UY",
+  "KR",
+];
