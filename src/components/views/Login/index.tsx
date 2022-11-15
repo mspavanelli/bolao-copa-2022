@@ -12,7 +12,7 @@ export function Login() {
       </h1>
 
       <Button>
-        <Link href="/app" className=" w-full">
+        <Link href="/dashboard" className=" w-full">
           Login
         </Link>
       </Button>
