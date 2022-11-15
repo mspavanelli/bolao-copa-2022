@@ -11,9 +11,11 @@ export function Login() {
         Qatar 2022
       </h1>
 
-      <Link href="/app" className=" w-full">
-        <Button>Login</Button>
-      </Link>
+      <Button>
+        <Link href="/app" className=" w-full">
+          Login
+        </Link>
+      </Button>
     </div>
   );
 }
