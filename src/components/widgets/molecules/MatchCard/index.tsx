@@ -7,12 +7,20 @@ import dayJS from "dayjs";
 import ptBR from "dayjs/locale/pt-br";
 import { useEffect, useState } from "react";
 
+export enum MatchStatus {
+  CLOSED,
+  OPEN,
+  CURRENT,
+  ERROR,
+}
+
 export type MatchCardProps = {
   firstTeam: string;
   firstTeamGoals?: number;
   secondTeam: string;
   secondTeamGoals?: number;
   date: Date;
+  status: MatchStatus;
 };
 
 export function MatchCard({
@@ -21,6 +29,7 @@ export function MatchCard({
   firstTeamGoals = 0,
   secondTeamGoals = 0,
   date,
+  status,
 }: MatchCardProps) {
   const firstTeamName = getName(firstTeam);
   const secondTeamName = getName(secondTeam);
@@ -38,8 +47,25 @@ export function MatchCard({
     console.warn({ scoreboard });
   }
 
+  function getStatusStyles() {
+    switch (status) {
+      case MatchStatus.OPEN:
+        return "border-b-2 border-yellow-400";
+      case MatchStatus.CURRENT:
+        return "border-b-2 border-green-500";
+      case MatchStatus.CLOSED:
+        return "opacity-50";
+      case MatchStatus.ERROR:
+        return "border-2 border-red-500";
+    }
+  }
+
+  function allowEdition() {
+    return status === MatchStatus.OPEN || status === MatchStatus.ERROR;
+  }
+
   return (
-    <div className="rounded-lg bg-stone-700 p-4">
+    <div className={`rounded-lg bg-stone-700 p-4 ${getStatusStyles()}`}>
       <header className="mb-4 text-center">
         <h2 className="text-white">
           {firstTeamName} vs. {secondTeamName}
@@ -51,6 +77,7 @@ export function MatchCard({
         <div className="flex items-center gap-2">
           <input
             className="h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2"
+            disabled={!allowEdition}
             value={scoreboard[0]}
             onChange={({ target }) => {
               const { value } = target;
@@ -84,6 +111,7 @@ export function MatchCard({
           />
           <input
             className="h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2"
+            disabled={!allowEdition}
             value={scoreboard[1]}
             onChange={({ target }) => {
               const { value } = target;
