@@ -24,8 +24,8 @@ export type MatchCardProps = {
 export function MatchCard({
   firstTeam,
   secondTeam,
-  firstTeamGoals = 0,
-  secondTeamGoals = 0,
+  firstTeamGoals,
+  secondTeamGoals,
   date,
   status,
 }: MatchCardProps) {
@@ -72,7 +72,7 @@ export function MatchCard({
       </header>
 
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <input
             className="h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2"
             disabled={!allowEdition}
@@ -100,7 +100,7 @@ export function MatchCard({
 
         <X color="#8D8D99" size={24} />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <img
             src={`https://flagcdn.com/${secondTeam.toLowerCase()}.svg`}
             alt={`${secondTeamName}'s flags`}
