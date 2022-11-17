@@ -75,6 +75,7 @@ export function MatchCard({
         <div className="flex items-center gap-4">
           <input
             className="h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2"
+            type="tel"
             disabled={!allowEdition}
             value={scoreboard[0]}
             onChange={({ target }) => {
@@ -109,6 +110,7 @@ export function MatchCard({
           />
           <input
             className="h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2"
+            type="tel"
             disabled={!allowEdition}
             value={scoreboard[1]}
             onChange={({ target }) => {
