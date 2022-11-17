@@ -3,7 +3,7 @@ import { MatchesList } from "../../molecules/MatchesList";
 
 export function Guesses() {
   return (
-    <div>
+    <div className="overflow-scroll">
       <Header title="Palpites" />
 
       <section className="mt-10 overflow-y-scroll">
