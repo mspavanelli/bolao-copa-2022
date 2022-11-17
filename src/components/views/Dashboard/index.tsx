@@ -38,7 +38,7 @@ export function Dashboard() {
                     : "h-full w-full bg-stone-700 p-4 text-stone-300 outline-none"
                 }
               >
-                Bolões
+                Classificação
               </button>
             )}
           </Tab>
