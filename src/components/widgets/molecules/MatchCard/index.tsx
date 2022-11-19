@@ -8,12 +8,11 @@ import { MatchStatusPill } from "@/components/widgets/atoms/MatchStatusPill";
 import { MatchScorePoints } from "@/components/widgets/atoms/MatchScorePoints";
 
 import { MatchStatus } from "@/utils/enums/MatchStatus";
-import { Countries } from "@/utils/enums/Countries";
 
 export type MatchCardProps = {
-  firstTeam: Countries;
+  firstTeam: string;
   firstTeamGoals?: number;
-  secondTeam: Countries;
+  secondTeam: string;
   secondTeamGoals?: number;
   date: Date;
   status: MatchStatus;
