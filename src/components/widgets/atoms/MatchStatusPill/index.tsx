@@ -15,7 +15,7 @@ export function MatchStatusPill({ status }: MatchStatusProps) {
 
   if (status === MatchStatus.CURRENT) {
     return (
-      <span className="rounded-full bg-lime-600 px-4 py-1 text-xs text-stone-200">
+      <span className="flex items-center rounded-full bg-lime-600 px-4 py-1 text-xs text-stone-200">
         AO VIVO
       </span>
     );
