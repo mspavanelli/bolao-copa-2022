@@ -4,18 +4,16 @@ import dayJS from "dayjs";
 import ptBR from "dayjs/locale/pt-br";
 import { X } from "phosphor-react";
 import { getName } from "country-list";
+import { MatchStatusPill } from "@/components/widgets/atoms/MatchStatusPill";
+import { MatchScorePoints } from "@/components/widgets/atoms/MatchScorePoints";
 
-export enum MatchStatus {
-  CLOSED,
-  OPEN,
-  CURRENT,
-  ERROR,
-}
+import { MatchStatus } from "@/utils/enums/MatchStatus";
+import { Countries } from "@/utils/enums/Countries";
 
 export type MatchCardProps = {
-  firstTeam: string;
+  firstTeam: Countries;
   firstTeamGoals?: number;
-  secondTeam: string;
+  secondTeam: Countries;
   secondTeamGoals?: number;
   date: Date;
   status: MatchStatus;
@@ -29,8 +27,8 @@ export function MatchCard({
   date,
   status,
 }: MatchCardProps) {
-  const firstTeamName = getName(firstTeam);
-  const secondTeamName = getName(secondTeam);
+  const firstTeamName = getName(firstTeam.toString());
+  const secondTeamName = getName(secondTeam.toString());
 
   const when = dayJS(date)
     .locale(ptBR)
@@ -52,7 +50,7 @@ export function MatchCard({
       case MatchStatus.CURRENT:
         return "border-b-2 border-green-500";
       case MatchStatus.CLOSED:
-        return "opacity-50";
+        return "opacity-80";
       case MatchStatus.ERROR:
         return "border-2 border-red-500";
     }
@@ -74,9 +72,11 @@ export function MatchCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <input
-            className="h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2"
+            className={`h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2 ${
+              allowEdition() ? "" : "opacity-70"
+            }`}
             type="tel"
-            disabled={!allowEdition}
+            disabled={!allowEdition()}
             value={scoreboard[0]}
             onChange={({ target }) => {
               const { value } = target;
@@ -109,9 +109,11 @@ export function MatchCard({
             className="my-2"
           />
           <input
-            className="h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2"
+            className={`h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2 ${
+              allowEdition() ? "" : "opacity-70"
+            }`}
             type="tel"
-            disabled={!allowEdition}
+            disabled={!allowEdition()}
             value={scoreboard[1]}
             onChange={({ target }) => {
               const { value } = target;
@@ -122,11 +124,22 @@ export function MatchCard({
               }
 
               const second = parseInt(value);
+
+              if (!Number.isInteger(second)) {
+                target.value = "";
+                return;
+              }
+
               setScoreboard([scoreboard[0], second]);
             }}
             onBlur={updateGuess}
           />
         </div>
+      </div>
+      <hr className="my-4 border-stone-600" />
+      <div className="mt-4 flex justify-between text-sm text-stone-300">
+        <MatchStatusPill status={status} />
+        <MatchScorePoints points={0} />
       </div>
     </div>
   );

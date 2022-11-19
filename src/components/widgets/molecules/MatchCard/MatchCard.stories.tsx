@@ -1,6 +1,7 @@
+import { MatchStatus } from "@/utils/enums/MatchStatus";
 import { Meta, StoryObj } from "@storybook/react";
 
-import { MatchCard, MatchCardProps, MatchStatus } from "./index";
+import { MatchCard, MatchCardProps } from "./index";
 
 export default {
   title: "components/widgets/molecules/MatchCard",
@@ -12,6 +13,13 @@ export default {
     secondTeam: "AR",
     secondTeamGoals: 0,
     status: MatchStatus.OPEN,
+  },
+  argTypes: {
+    status: {
+      control: {
+        type: "select",
+      },
+    },
   },
 } as Meta<MatchCardProps>;
 
