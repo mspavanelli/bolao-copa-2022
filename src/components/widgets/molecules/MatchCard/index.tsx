@@ -26,8 +26,8 @@ export function MatchCard({
   date,
   status,
 }: MatchCardProps) {
-  const firstTeamName = getName(firstTeam.toString());
-  const secondTeamName = getName(secondTeam.toString());
+  const firstTeamName = getName(firstTeam);
+  const secondTeamName = getName(secondTeam);
 
   const when = dayJS(date)
     .locale(ptBR)

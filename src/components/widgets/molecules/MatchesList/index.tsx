@@ -65,9 +65,9 @@ export function MatchesList() {
         <MatchCard
           key={match.id}
           date={match.date}
-          firstTeam={Countries[match.first_team]}
+          firstTeam={match.first_team}
           firstTeamGoals={match.first_team_score}
-          secondTeam={Countries[match.second_team]}
+          secondTeam={match.second_team}
           secondTeamGoals={match.second_team_score}
           status={match.status}
         />
