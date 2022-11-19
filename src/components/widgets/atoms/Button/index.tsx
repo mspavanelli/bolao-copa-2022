@@ -6,7 +6,7 @@ export type ButtonProps = {
 
 export function Button({ children }: ButtonProps) {
   return (
-    <button className="w-full rounded bg-yellow-300 p-3 font-semibold text-stone-800">
+    <button className="w-full rounded bg-yellow-300 p-3 font-semibold text-stone-800 transition active:opacity-80">
       {children}
     </button>
   );
