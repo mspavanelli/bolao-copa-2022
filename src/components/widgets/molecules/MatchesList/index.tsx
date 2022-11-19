@@ -46,7 +46,7 @@ export function MatchesList() {
 
       const allMatchesOrderByDate = matchesDoc.sort(
         (firstMatch, secondMatch) =>
-          new Date(firstMatch.date) - new Date(secondMatch.date)
+          firstMatch.date.getTime() - secondMatch.date.getTime()
       );
 
       setMatches(allMatchesOrderByDate);
