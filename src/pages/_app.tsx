@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 
+import "@/lib/firebase";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
