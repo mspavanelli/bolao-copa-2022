@@ -13,7 +13,7 @@ export function Login() {
 
       <Button>
         <Link href="/dashboard" className=" w-full">
-          Login
+          <a>Login</a>
         </Link>
       </Button>
     </div>
