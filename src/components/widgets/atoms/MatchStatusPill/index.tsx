@@ -1,7 +1,7 @@
 import { MatchStatus } from "@/utils/enums/MatchStatus";
 
 export type MatchStatusProps = {
-  status: MatchStatus;
+  status?: MatchStatus;
 };
 
 export function MatchStatusPill({ status }: MatchStatusProps) {
