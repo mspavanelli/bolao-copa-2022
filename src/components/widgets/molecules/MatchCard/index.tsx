@@ -30,8 +30,15 @@ export function MatchCard({
   date,
   status,
 }: MatchCardProps) {
-  const firstTeamName = getName(firstTeam);
-  const secondTeamName = getName(secondTeam);
+  let firstTeamName = getName(firstTeam);
+  let secondTeamName = getName(secondTeam);
+
+  if (firstTeam.startsWith("GB-ENG")) {
+    firstTeamName = "England";
+  }
+  if (secondTeam.startsWith("GB-WLS")) {
+    secondTeamName = "Wales";
+  }
 
   const when = dayJS(date)
     .locale(ptBR)
