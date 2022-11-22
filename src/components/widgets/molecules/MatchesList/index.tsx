@@ -1,67 +1,27 @@
-import { useState, useEffect } from "react";
-
-import { MatchStatus } from "@/utils/enums/MatchStatus";
-import { MatchCard } from "@/components/widgets/molecules/MatchCard";
-import { Countries } from "@/utils/enums/Countries";
+import { useQuery } from "@tanstack/react-query";
 import { Match } from "@/utils/types/Match";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { MatchCard } from "@/components/widgets/molecules/MatchCard";
+import { getMatchStatus } from "@/utils/getMatchStatus";
 
 export function MatchesList() {
-  const [matches, setMatches] = useState<Array<Match>>([]);
+  const { data, status, error, isLoading } = useQuery({
+    queryKey: ["allMatches"],
+    queryFn: fetchAllMatches,
+  });
 
-  const matchesCollection = collection(db, "matches");
-
-  async function fetchMatches() {
-    try {
-      const response = await getDocs(matchesCollection);
-      const { docs } = response;
-
-      const matchesDoc = docs.map((doc) => {
-        const { id } = doc;
-        const {
-          first_team,
-          first_team_score,
-          second_team,
-          second_team_score,
-          weight,
-          date: rawDate,
-        } = doc.data();
-
-        const date = new Date(rawDate.seconds * 1000);
-
-        const status = MatchStatus.OPEN;
-
-        return {
-          id,
-          date,
-          first_team,
-          first_team_score,
-          second_team,
-          second_team_score,
-          weight,
-          status,
-        };
-      });
-
-      const allMatchesOrderByDate = matchesDoc.sort(
-        (firstMatch, secondMatch) =>
-          firstMatch.date.getTime() - secondMatch.date.getTime()
-      );
-
-      setMatches(allMatchesOrderByDate);
-    } catch (err) {
-      console.error(err);
-    }
+  function fetchAllMatches() {
+    return fetch("/api/matches").then((response) => response.json());
   }
 
-  useEffect(() => {
-    fetchMatches();
-  }, []);
+  if (!data || !data.matches) {
+    return <div>...</div>;
+  }
+
+  const matches: Array<Match> = data.matches;
 
   return (
     <div className="space-y-8">
-      {matches.map((match) => (
+      {matches?.map((match) => (
         <MatchCard
           key={match.id}
           date={match.date}
@@ -69,7 +29,7 @@ export function MatchesList() {
           firstTeamGoals={match.first_team_score}
           secondTeam={match.second_team}
           secondTeamGoals={match.second_team_score}
-          status={match.status}
+          status={getMatchStatus(match)}
         />
       ))}
     </div>

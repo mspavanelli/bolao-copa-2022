@@ -15,7 +15,7 @@ export type MatchCardProps = {
   secondTeam: string;
   secondTeamGoals?: number;
   date: Date;
-  status: MatchStatus;
+  status?: MatchStatus;
 };
 
 export function MatchCard({
