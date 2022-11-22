@@ -12,8 +12,10 @@ import { MatchStatus } from "@/utils/enums/MatchStatus";
 export type MatchCardProps = {
   firstTeam: string;
   firstTeamGoals?: number;
+  firstTeamGuessGoals?: number;
   secondTeam: string;
   secondTeamGoals?: number;
+  secondTeamGuessGoals?: number;
   date: Date;
   status?: MatchStatus;
 };
@@ -23,6 +25,8 @@ export function MatchCard({
   secondTeam,
   firstTeamGoals,
   secondTeamGoals,
+  firstTeamGuessGoals,
+  secondTeamGuessGoals,
   date,
   status,
 }: MatchCardProps) {
@@ -33,9 +37,11 @@ export function MatchCard({
     .locale(ptBR)
     .format("DD [de] MMMM [de] YYYY [às] H[h]");
 
+  const matchAlreadyFinished = status === MatchStatus.CLOSED;
+
   const [scoreboard, setScoreboard] = useState([
-    firstTeamGoals,
-    secondTeamGoals,
+    firstTeamGuessGoals,
+    secondTeamGuessGoals,
   ]);
 
   function updateGuess() {
@@ -135,6 +141,15 @@ export function MatchCard({
           />
         </div>
       </div>
+
+      {matchAlreadyFinished && (
+        <div className="mx-auto mt-2 w-fit rounded-2xl bg-stone-50 px-3 py-1 text-xs text-stone-600">
+          Final:{" "}
+          <span className="font-bold">
+            {firstTeamGoals} &times; {secondTeamGoals}
+          </span>
+        </div>
+      )}
       <hr className="my-4 border-stone-600" />
       <div className="mt-4 flex justify-between text-sm text-stone-300">
         <MatchStatusPill status={status} />

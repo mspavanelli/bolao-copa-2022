@@ -7,12 +7,14 @@ export default {
   title: "components/widgets/molecules/MatchCard",
   component: MatchCard,
   args: {
-    date: new Date(),
-    firstTeam: "BR",
-    firstTeamGoals: 2,
-    secondTeam: "AR",
-    secondTeamGoals: 0,
-    status: MatchStatus.OPEN,
+    date: new Date(2022, 11, 20, 16, 0, 0),
+    firstTeam: "QA",
+    firstTeamGoals: 0,
+    secondTeam: "EC",
+    secondTeamGoals: 2,
+    status: MatchStatus.CLOSED,
+    firstTeamGuessGoals: 0,
+    secondTeamGuessGoals: 1,
   },
   argTypes: {
     status: {
