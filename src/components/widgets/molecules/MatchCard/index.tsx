@@ -31,7 +31,7 @@ export function MatchCard({
 
   const when = dayJS(date)
     .locale(ptBR)
-    .format("DD [de] MMMM [de] YYYY [às] hh:mm");
+    .format("DD [de] MMMM [de] YYYY [às] H[h]");
 
   const [scoreboard, setScoreboard] = useState([
     firstTeamGoals,
