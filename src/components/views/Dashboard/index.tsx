@@ -15,14 +15,14 @@ export function Dashboard() {
             <Polls />
           </Tab.Panel>
         </Tab.Panels>
-        <Tab.List className="flex items-center justify-around rounded bg-stone-700">
+        <Tab.List className="flex items-center justify-around rounded-2xl bg-stone-700">
           <Tab as={Fragment}>
             {({ selected }) => (
               <button
                 className={
                   selected
-                    ? "h-full w-full bg-stone-600 p-4 text-amber-300 outline-none"
-                    : "h-full w-full bg-stone-700 p-4 text-stone-300 outline-none"
+                    ? "h-full w-full rounded-xl bg-stone-600 p-4 text-amber-300 outline-none"
+                    : "h-full w-full rounded-xl bg-stone-700 p-4 text-stone-300 outline-none"
                 }
               >
                 Palpites
@@ -34,8 +34,8 @@ export function Dashboard() {
               <button
                 className={
                   selected
-                    ? "h-full w-full bg-stone-600 p-4 text-amber-300 outline-none"
-                    : "h-full w-full bg-stone-700 p-4 text-stone-300 outline-none"
+                    ? "h-full w-full rounded-xl bg-stone-600 p-4 text-amber-300 outline-none"
+                    : "h-full w-full rounded-xl bg-stone-700 p-4 text-stone-300 outline-none"
                 }
               >
                 Classificação
