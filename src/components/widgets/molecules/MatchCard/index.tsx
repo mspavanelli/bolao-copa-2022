@@ -6,6 +6,7 @@ import { X } from "phosphor-react";
 import { getName } from "country-list";
 import { MatchStatusPill } from "@/components/widgets/atoms/MatchStatusPill";
 import { MatchScorePoints } from "@/components/widgets/atoms/MatchScorePoints";
+import { TeamScore } from "@/components/widgets/molecules/TeamScore";
 
 import { MatchStatus } from "@/utils/enums/MatchStatus";
 
@@ -30,21 +31,11 @@ export function MatchCard({
   date,
   status,
 }: MatchCardProps) {
-  let firstTeamName = getName(firstTeam);
-  let secondTeamName = getName(secondTeam);
-
-  if (firstTeam.startsWith("GB-ENG")) {
-    firstTeamName = "England";
-  }
-  if (secondTeam.startsWith("GB-WLS")) {
-    secondTeamName = "Wales";
-  }
-
-  const when = dayJS(date)
-    .locale(ptBR)
-    .format("DD [de] MMMM [de] YYYY [às] H[h]");
+  const when = dayJS(date).locale(ptBR).format("DD/MM - H[h]");
 
   const matchAlreadyFinished = status === MatchStatus.CLOSED;
+  const allowEdition =
+    status === MatchStatus.OPEN || status === MatchStatus.ERROR;
 
   const [scoreboard, setScoreboard] = useState([
     firstTeamGuessGoals,
@@ -68,99 +59,48 @@ export function MatchCard({
     }
   }
 
-  function allowEdition() {
-    return status === MatchStatus.OPEN || status === MatchStatus.ERROR;
-  }
-
   return (
     <div className={`rounded-lg bg-stone-700 p-4 ${getStatusStyles()}`}>
-      <header className="mb-4 text-center">
-        <h2 className="text-white">
-          {firstTeamName} vs. {secondTeamName}
-        </h2>
-        <p className="text-gray-400">{when}</p>
+      <header className="mb-3 flex items-center justify-between">
+        <p className="flex-1  text-gray-400">{when}</p>
+        <div className="flex flex-1 justify-center">
+          <MatchStatusPill status={status} />
+        </div>
+        <div className="flex flex-1 justify-end">
+          <MatchScorePoints points={0} />
+        </div>
       </header>
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <input
-            className={`h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2 ${
-              allowEdition() ? "" : "opacity-70"
-            }`}
-            type="tel"
-            disabled={!allowEdition()}
-            value={scoreboard[0]}
-            onChange={({ target }) => {
-              const { value } = target;
-
-              if (!value) {
-                setScoreboard([0, scoreboard[1]]);
-                return;
-              }
-
-              const first = parseInt(value);
-              setScoreboard([first, scoreboard[1]]);
-            }}
-            onBlur={updateGuess}
-          />
-          <img
-            src={`https://flagcdn.com/${firstTeam.toLowerCase()}.svg`}
-            alt={`${firstTeamName}'s flags`}
-            width={40}
-            className="my-2"
-          />
-        </div>
-
-        <X color="#8D8D99" size={24} />
-
-        <div className="flex items-center gap-4">
-          <img
-            src={`https://flagcdn.com/${secondTeam.toLowerCase()}.svg`}
-            alt={`${secondTeamName}'s flags`}
-            width={40}
-            className="my-2"
-          />
-          <input
-            className={`h-10 w-10 rounded bg-stone-800 p-2 text-center text-stone-300 outline-none ring-yellow-300 focus:ring-2 ${
-              allowEdition() ? "" : "opacity-70"
-            }`}
-            type="tel"
-            disabled={!allowEdition()}
-            value={scoreboard[1]}
-            onChange={({ target }) => {
-              const { value } = target;
-
-              if (!value) {
-                setScoreboard([scoreboard[0], 0]);
-                return;
-              }
-
-              const second = parseInt(value);
-
-              if (!Number.isInteger(second)) {
-                target.value = "";
-                return;
-              }
-
-              setScoreboard([scoreboard[0], second]);
-            }}
-            onBlur={updateGuess}
-          />
-        </div>
-      </div>
-
       {matchAlreadyFinished && (
-        <div className="mx-auto mt-2 w-fit rounded-2xl bg-stone-50 px-3 py-1 text-xs text-stone-600">
-          Final:{" "}
+        <div className="mx-auto mb-3 w-fit rounded-2xl bg-stone-50 px-3 py-1 text-xs text-stone-600">
           <span className="font-bold">
             {firstTeamGoals} &times; {secondTeamGoals}
           </span>
         </div>
       )}
-      <hr className="my-4 border-stone-600" />
-      <div className="mt-4 flex justify-between text-sm text-stone-300">
-        <MatchStatusPill status={status} />
-        <MatchScorePoints points={0} />
+
+      <div className="flex items-start justify-center gap-4">
+        <div className="flex flex-1 justify-end">
+          <TeamScore
+            teamCode={firstTeam}
+            allowEdition={allowEdition}
+            direction="LEFT"
+            score={firstTeamGuessGoals}
+          />
+        </div>
+
+        <div className="mt-2">
+          <X color="#8D8D99" size={24} />
+        </div>
+
+        <div className="flex-1">
+          <TeamScore
+            teamCode={secondTeam}
+            allowEdition={allowEdition}
+            direction="RIGHT"
+            score={secondTeamGuessGoals}
+          />
+        </div>
       </div>
     </div>
   );
