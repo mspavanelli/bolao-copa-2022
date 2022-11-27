@@ -69,9 +69,9 @@ function add(request: NextApiRequest, response: NextApiResponse) {
     const firebase_response = addDoc(matchesCollection, {
       date: new Date(date),
       first_team,
-      first_team_score: "0",
+      first_team_score: 0,
       second_team,
-      second_team_score: "0",
+      second_team_score: 0,
       weight: 1,
     });
     return response.status(201).send({ match });
