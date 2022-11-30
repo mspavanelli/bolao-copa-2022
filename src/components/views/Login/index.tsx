@@ -1,5 +1,11 @@
-import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
+import {
+  getAuth,
+  getRedirectResult,
+  signInWithRedirect,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
@@ -9,19 +15,28 @@ export function Login() {
   const router = useRouter();
 
   async function handleLogin() {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
-      const { user } = result;
-      const { displayName, photoURL } = user;
-      alert({ displayName });
-
-      router.push("/dashboard");
-    } catch (err) {
-      console.error(err);
-    }
+    await signInWithRedirect(auth, provider);
   }
+
+  async function handleRedirect() {
+    getRedirectResult(auth)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result?.user;
+        router.push("/dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData?.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  }
+
+  useEffect(() => {
+    handleRedirect();
+  }, []);
 
   return (
     <div className=" flex h-screen flex-col items-center justify-between bg-red-900 p-8">
